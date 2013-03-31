@@ -1,9 +1,24 @@
 <?php
 
+function april_fools_compute_angle($h, $m) {
+  $angle = ((intval($h) * 60 + intval($m)) / (24*60) * 360);
+  // $angle = (sin(deg2rad($angle / 2)) * 360 + 90) % 360;
+  return $angle;
+}
+
 function april_fools_node_view($node, $view_mode, $langcode) {
-  $hours = date("G");
-  $mins = date("i");
-  $angle = (intval($hours) * 60 + intval($mins)) / (24*60) * 360 - 180;
-  error_log("Angle: $angle");
-  drupal_add_css("body {-webkit-transform: perspective(5000px) rotateY(" . intval($angle) . "deg)}", array('type' => 'inline', 'preprocess' => FALSE));
+  $date = date("md");
+  if ($date == "0401") {
+    $hours = date("G");
+    $mins = date("i");
+    $angle = april_fools_compute_angle($hours, $mins);
+    /* $h = array(); */
+    /* for ($i = 0; $i <= 24; $i++) { */
+    /*   $h[$i] = april_fools_compute_angle($i, 0); */
+    /* } */
+    /* kpr($h); */
+    /* error_log("Angle: $angle"); */
+    drupal_add_css("body {-webkit-transform: perspective(5000px) rotateY(" .
+      intval($angle) . "deg)}",
+      array('type' => 'inline', 'preprocess' => FALSE));
 }

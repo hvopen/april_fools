@@ -1,0 +1,9 @@
+<?php
+
+function april_fools_node_view($node, $view_mode, $langcode) {
+  $hours = date("G");
+  $mins = date("i");
+  $angle = (intval($hours) * 60 + intval($mins)) / (24*60) * 360 - 180;
+  error_log("Angle: $angle");
+  drupal_add_css("body {-webkit-transform: perspective(5000px) rotateY(" . intval($angle) . "deg)}", array('type' => 'inline', 'preprocess' => FALSE));
+}
